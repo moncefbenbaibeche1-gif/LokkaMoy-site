@@ -1,40 +1,382 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <title>تطبيقي</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 40px;
-            background: #f5f5f5;
-        }
-        h1 {
-            color: #333;
-        }
-        p {
-            font-size: 18px;
-            color: #555;
-        }
-        a {
-            display: inline-block;
-            margin-top: 20px;
-            background: #4CAF50;
-            color: white;
-            padding: 15px 30px;
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 18px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LokkaMoy | Semester Calculation</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+html{scroll-behavior:smooth}
+*{box-sizing:border-box}
+
+:root{
+  --bg-main:#0b0f19;
+  --bg-soft:#020617;
+  --card-bg:rgba(255,255,255,.04);
+  --border-soft:rgba(255,255,255,.12);
+  --text-main:#f8fafc;
+  --text-soft:#cbd5e1;
+  --primary:#ffffff;
+  --secondary:#e5e7eb;
+}
+
+body{
+  margin:0;
+  font-family:"Segoe UI",Tahoma,sans-serif;
+  direction:rtl;
+  background:var(--bg-soft);
+  color:var(--text-main);
+}
+
+/* NAVBAR */
+nav{
+  position:fixed;
+  top:0;
+  width:100%;
+  z-index:100;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 50px;
+  background:rgba(11,15,25,.65);
+  backdrop-filter:blur(14px);
+}
+
+.logo{
+  font-size:22px;
+  font-weight:bold;
+  color:white;
+}
+
+nav ul{
+  list-style:none;
+  display:flex;
+  gap:30px;
+}
+
+nav ul li a{
+  color:var(--text-soft);
+  text-decoration:none;
+}
+
+nav ul li a.active{
+  color:white;
+  border-bottom:2px solid white;
+  padding-bottom:6px;
+}
+
+.cta{
+  background:white;
+  padding:12px 26px;
+  border-radius:30px;
+  color:#020617;
+  font-weight:bold;
+  text-decoration:none;
+}
+
+/* HERO */
+.hero{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  padding:140px 30px;
+  background:
+    radial-gradient(circle at 25% 20%,rgba(255,255,255,.08),transparent 45%),
+    radial-gradient(circle at 80% 30%,rgba(255,255,255,.06),transparent 40%),
+    var(--bg-main);
+}
+
+.hero-container{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:70px;
+  align-items:center;
+}
+
+.hero-image{
+  display:flex;
+  justify-content:center;
+}
+
+.hero-image img{
+  width:65%;
+  max-width:320px;
+  border-radius:22px;
+  box-shadow:0 30px 70px rgba(0,0,0,.6);
+  animation:float 6s ease-in-out infinite;
+}
+
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
+
+.badge{
+  display:inline-block;
+  background:rgba(255,255,255,.06);
+  border:1px solid var(--border-soft);
+  padding:8px 18px;
+  border-radius:30px;
+  font-size:14px;
+  margin-bottom:20px;
+}
+
+.hero-content h1{
+  font-size:56px;
+  line-height:1.15;
+  margin:15px 0 25px;
+}
+
+.hero-content h1 span{
+  color:var(--secondary);
+}
+
+.hero-content p{
+  font-size:18px;
+  line-height:1.9;
+  color:var(--text-soft);
+  max-width:540px;
+}
+
+.hero-buttons{
+  margin-top:40px;
+  display:flex;
+  gap:22px;
+}
+
+.btn{
+  padding:16px 34px;
+  border-radius:40px;
+  font-weight:bold;
+  text-decoration:none;
+  transition:.3s;
+}
+
+.btn.primary{
+  background:white;
+  color:#020617;
+}
+
+.btn.secondary{
+  border:1px solid var(--border-soft);
+  color:white;
+}
+
+.btn:hover{
+  transform:translateY(-5px);
+  box-shadow:0 10px 30px rgba(255,255,255,.15);
+}
+
+/* SECTIONS */
+section{
+  padding:110px 30px;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  text-align:center;
+  opacity:0;
+  transform:translateY(40px);
+  transition:.8s ease;
+}
+
+.container.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* FEATURES */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:28px;
+  margin-top:55px;
+}
+
+.card{
+  background:var(--card-bg);
+  border:1px solid var(--border-soft);
+  border-radius:22px;
+  padding:34px;
+  backdrop-filter:blur(10px);
+}
+
+/* IMAGES */
+.images{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:22px;
+  margin-top:45px;
+}
+
+.images img{
+  width:200px;
+  border-radius:18px;
+  box-shadow:0 18px 40px rgba(0,0,0,.45);
+}
+
+/* FOOTER */
+footer{
+  padding:45px;
+  text-align:center;
+  background:var(--bg-main);
+}
+
+.socials{
+  display:flex;
+  justify-content:center;
+  gap:22px;
+  margin-bottom:18px;
+}
+
+.social{
+  width:48px;
+  height:48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  font-size:20px;
+  color:#020617;
+  background:white;
+  transition:.3s;
+}
+
+.social:hover{
+  transform:translateY(-6px);
+}
+
+footer p{
+  font-size:14px;
+  color:#94a3b8;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero-container{
+    grid-template-columns:1fr;
+    text-align:center;
+  }
+  .hero-content h1{
+    font-size:42px;
+  }
+  .hero-buttons{
+    justify-content:center;
+  }
+}
+</style>
 </head>
+
 <body>
 
-    <h1>اسم التطبيق</h1>
-    <p>هذا شرح بسيط للتطبيق تاعي. التطبيق يساعدك على …</p>
+<nav>
+  <div class="logo">LokkaMoy</div>
+  <ul>
+    <li><a href="#home" class="nav-link active">الرئيسية</a></li>
+    <li><a href="#features" class="nav-link">المميزات</a></li>
+    <li><a href="#screens" class="nav-link">صور التطبيق</a></li>
+  </ul>
+  <a class="cta" 
+   href="https://drive.google.com/uc?export=download&id=1aH2v5dt1RStX7nJIKgaDAPFw4bmFC_pz"
+   target="_blank">
+   تحميل
+</a>
+</nav>
 
-    <a href="#">⬇️ تحميل التطبيق</a>
+<section id="home" class="hero">
+  <div class="hero-container">
+
+    <div class="hero-content">
+      <span class="badge">📱 تطبيق Android</span>
+      <h1>احسب معدلك<br><span>باحترافية وهدوء</span></h1>
+      <p>
+        تطبيق جامعي يساعدك على حساب معدل كل مادة
+        عبر إدخال نقاط TD و TP و Exam،
+        مع نتائج دقيقة وفورية
+        وواجهة أنيقة مريحة للعين.
+      </p>
+      <div class="hero-buttons">
+        <a href="https://drive.google.com/uc?export=download&id=1aH2v5dt1RStX7nJIKgaDAPFw4bmFC_pz"
+   target="_blank"
+   class="btn primary">
+   ابدأ الآن
+</a>
+
+        <a href="#features" class="btn secondary">تعرف أكثر</a>
+      </div>
+    </div>
+
+    <div class="hero-image">
+      <img src="hero.png" alt="App Preview">
+    </div>
+
+  </div>
+</section>
+
+<section id="features">
+  <div class="container">
+    <h2>مميزات التطبيق</h2>
+    <div class="cards">
+      <div class="card"><div class="icon">🧮</div><h3>حساب دقيق</h3></div>
+      <div class="card"><div class="icon">🎓</div><h3>نظام LMD</h3></div>
+      <div class="card"><div class="icon">⚡</div><h3>نتائج فورية</h3></div>
+      <div class="card"><div class="icon">🎨</div><h3>تصميم مريح</h3></div>
+    </div>
+  </div>
+</section>
+
+<section id="screens">
+  <div class="container">
+    <h2>صور التطبيق</h2>
+    <div class="images">
+      <img src="img1.png">
+      <img src="img2.png">
+      <img src="img3.png">
+    </div>
+  </div>
+</section>
+
+<footer>
+<div class="socials">
+  <a href="https://t.me/+oxCWmn0bhPI1NzE0" target="_blank" class="social">
+    <i class="fab fa-telegram-plane"></i>
+  </a>
+
+  <a href="https://www.instagram.com/moncefbnch_19/" target="_blank" class="social">
+    <i class="fab fa-instagram"></i>
+  </a>
+</div>
+
+  <p>© Developed By Moncef Benbaibeche 2026</p>
+</footer>
+
+<script>
+const sections=document.querySelectorAll("section");
+const links=document.querySelectorAll(".nav-link");
+
+window.addEventListener("scroll",()=>{
+  let current="";
+  sections.forEach(s=>{
+    if(pageYOffset>=s.offsetTop-150){current=s.id}
+  });
+  links.forEach(l=>{
+    l.classList.remove("active");
+    if(l.getAttribute("href")==="#"+current){l.classList.add("active")}
+  });
+});
+
+const obs=new IntersectionObserver(e=>{
+  e.forEach(i=>{if(i.isIntersecting){i.target.classList.add("show")}})
+},{threshold:.2});
+
+document.querySelectorAll(".container").forEach(c=>obs.observe(c));
+</script>
 
 </body>
 </html>
